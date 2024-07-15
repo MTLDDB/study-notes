@@ -5,23 +5,18 @@ sh get-docker.sh --mirror Aliyun
 
 # 启动
 systemctl start docker
-
 systemctl enable docker #设置开机自启
 
 # 配置镜像加速
 vim /etc/docker/daemon.json 
-
 {
   "registry-mirrors": ["https://u3f6r21f.mirror.aliyuncs.com"]
 }
-
 sudo systemctl deamon-reload
-
 sudo systemctl restart docker
 
 # docker image
 1.docker version #版本
-
 2.docker images #查看所有的镜像
   docker image ls
   docker images -q #只展示镜像id
