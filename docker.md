@@ -32,10 +32,8 @@ sudo systemctl restart docker
 1.docker ps #查看所有运行中的容器
 2.docker ps -a #查看所有的容器
   docker container #查看所有的容器
-3.docker run -d -p 8080:8080 --name tomcat01 镜像名
-  # -d:后台运行; -p:运行的端口号; --name:容器名（要唯一）
-4.docker start 容器名/id #启动容器
-  # restart / stop /kill
+3.docker run -d -p 8080:8080 --name tomcat01 镜像名 # -d:后台运行; -p:运行的端口号; --name:容器名（要唯一）
+4.docker start 容器名/id #启动容器 # restart / stop /kill
 5.docker rm -f 容器名/id #删除容器 -f:删除在运行的容器
   docker rm -f (docker ps -qa) # -q只显示id
 6.docker logs id #查看日志
@@ -47,10 +45,8 @@ sudo systemctl restart docker
 10.docker inspect 274838438 #查看容器的详细信息，如ip、端口号、运行环境等
 
 #docker 数据卷
-1.docker run -d -p 8080:8080 --name tomcat01 -v /opt/apps:/usr/local/tomcat/webapps tomcat:8.0-jre8
- #将外部的/opt/apps 目录与容器内部的webapps目录做绑定，当外部数据变化是内部自动变化
-2.docker run -d -p 8080:8080 --name tomcat01 -v aa:/usr/local/tomcat/webapps tomcat:8.0-jre8
-  #会自动在/var/lib/docker/volumes目录下生成aa数据卷
+1.docker run -d -p 8080:8080 --name tomcat01 -v /opt/apps:/usr/local/tomcat/webapps tomcat:8.0-jre #将外部的/opt/apps 目录与容器内部的webapps目录做绑定，当外部数据变化是内部自动变化
+2.docker run -d -p 8080:8080 --name tomcat01 -v aa:/usr/local/tomcat/webapps tomcat:8.0-jre8 #会自动在/var/lib/docker/volumes目录下生成aa数据卷
   
 #自定义镜像
 docker commit -m "描述信息" -a "作者" tomcat01 my_tomcat:1.0 #将容器打包成一个镜像
