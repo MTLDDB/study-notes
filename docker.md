@@ -8,10 +8,14 @@ systemctl start docker
 systemctl enable docker #设置开机自启
 
 # 配置镜像加速
-- vim /etc/docker/daemon.json 
-- {
+- vim /etc/docker/daemon.json
+  
+ {
+ 
   "registry-mirrors": ["https://u3f6r21f.mirror.aliyuncs.com"]
+  
 }
+
 - sudo systemctl deamon-reload
 - sudo systemctl restart docker
 
