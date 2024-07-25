@@ -72,8 +72,9 @@ header {
   background-color: #ffffff;
   color: #100404;
   padding: 10px 20px;
-  border-bottom-width: 2px;
-  border-bottom-style: ridge;
+  border-width: 1px;
+  border-style: ridge;
+  border-left-style: none;
   border-color: #ba9331;
 }
 

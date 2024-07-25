@@ -28,13 +28,24 @@ export default {
   data() {
     return {
       menuItems: [
-
+        { id: 1, name: '首页', path: '/' },
+        { id: 2, name: '关于', path: '/about' },
+        {
+          id: 3,
+          name: '产品',
+          path: '',
+          children: [
+            { id: 4, name: '西瓜', path: '/product/1' },
+            { id: 5, name: '桃子', path: '/product/2' },
+          ],
+        },
+        { id: 4, name: 'FOR', path: '/for' },
       ],
       openItems: new Set(),// 用于存储展开的菜单项
     };
   },
   mounted() {
-    this.loadMenuData();
+    // this.loadMenuData();
   },
   methods: {
     toggle(item) {
@@ -60,10 +71,13 @@ export default {
 <style scoped>
 #sidebar {
   width: 180px;
-  background-color: #35495e;
-  color: white;
+  background-color: #ffffff;
+  color: #100404;
   padding: 15px;
   flex-shrink: 0;
+  border-width: 1px;
+  border-style: ridge;
+  border-color: #ba9331;
 }
 
 #sidebar h2 {
@@ -89,7 +103,7 @@ export default {
 }
 
 #sidebar nav ul li a {
-  color: white;
+  color: #100404;
   text-decoration: none;
 }
 
