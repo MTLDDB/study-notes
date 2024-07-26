@@ -36,42 +36,19 @@
 
   <button @click.once="handleClick">点击我一次</button>
 
-  <div @scroll.passive="handleScroll" style="height: 20px; overflow: scroll">
+  <div @scroll.passive="handleScroll">
     滚动我
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-    <p>滚动我</p><br>
-
 
   </div>
 
 
   <!-- 仅在 `key` 为 `Enter` 时调用 `submit` -->
-  <input @keyup.enter.prevent="submit" />
-  <input @keyup.page-down="onPageDown" />
+  <input @keyup.enter.prevent="submit"/>
+  <input @keyup.page-down="onPageDown"/>
 
 
   <!-- Alt + Enter -->
-  <input @keyup.alt.enter="submit" />
+  <input @keyup.alt.enter="submit"/>
 
   <!-- Ctrl + 点击 -->
   <div @click.ctrl="submit">Do something</div>
@@ -88,8 +65,8 @@
 
   <div>
     <p>Message is: {{ message }}</p>
-    <input v-model="message" placeholder="edit me" />
-<!--    想在拼字阶段也触发更新，请直接使用自己的 input 事件监听器和 value 绑定而不要使用 v-model-->
+    <input v-model="message" placeholder="edit me" ref="inputRef"/>
+    <!--    想在拼字阶段也触发更新，请直接使用自己的 input 事件监听器和 value 绑定而不要使用 v-model-->
   </div>
   <div>
     <span>Multiline message is:</span>
@@ -99,8 +76,59 @@
   </div>
 
   <div>
-    <input type="checkbox" id="checkbox" v-model="checked" />
+    <input type="checkbox" id="checkbox" v-model="checked"/>
     <label for="checkbox">{{ checked }}</label>
+  </div>
+
+  <div>//多选框
+    <div>Checked names: {{ checkedNames }}</div>
+
+    <input type="checkbox" id="jack" value="Jack" v-model="checkedNames"/>
+    <label for="jack">Jack</label>
+
+    <input type="checkbox" id="john" value="John" v-model="checkedNames"/>
+    <label for="john">John</label>
+
+    <input type="checkbox" id="mike" value="Mike" v-model="checkedNames"/>
+    <label for="mike">Mike</label>
+  </div>
+  <div>//单选按钮
+    <div>Picked: {{ picked }}</div>
+
+    <input type="radio" id="one" value="One" v-model="picked"/>
+    <label for="one">One</label>
+
+    <input type="radio" id="two" value="Two" v-model="picked"/>
+    <label for="two">Two</label>
+  </div>
+
+  <div>//下拉框
+    <div>Selected: {{ selected }}</div>
+
+    <select v-model="selected">
+      <option disabled value="">Please select one</option>
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+    </select>
+  </div>
+  <div style="width: 600px">
+    <div>Selected: {{ selected }}</div>
+
+    <select v-model="selected" multiple style="width: 200px">
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+    </select>
+  </div>
+
+  <div>
+    <div>{{selected}}</div>
+    <select v-model="selected">
+      <option v-for="option in options" v-bind:value="option.value">
+        {{ option.text }}
+      </option>
+    </select>
   </div>
 </template>
 
@@ -112,14 +140,49 @@ export default {
     return {
       numbers: [1, 2, 3, 4, 5],
       sets: [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]],
-      message : 'Hello World',
-      checked : false,
+      message: 'Hello World',
+      checked: false,
+      checkedNames: [],
+      picked: [],
+      selected: 'A',
+      options: [
+        { text: 'One', value: 'A' },
+        { text: 'Two', value: 'B' },
+        { text: 'Three', value: 'C' }
+      ],
     }
   },
   computed: {
     evenNumbers() {
       return this.numbers.filter(n => n % 2 === 0)
     },
+  },
+
+  created() {
+   const unwatch= this.$watch('selected', (newQuestion) => {
+      // ...
+     console.info(newQuestion+":unwatch")
+     unwatch();
+    })
+  },
+  watch: {
+    // 每当 selected 改变时，这个函数就会执行
+    selected(newStr, oldStr) {
+      console.info(oldStr+"->"+newStr)
+
+    },
+    checkedNames: {
+      handler(newStr) {
+        console.info(newStr)
+        // 在组件实例创建时会立即调用
+      },
+      // 强制立即执行回调
+      immediate: true
+      // once: true
+    }
+  },
+  mounted() {
+    this.$refs.inputRef.focus()
   },
   methods: {
     even(numbers) {
@@ -129,7 +192,7 @@ export default {
       if (event) {
         event.preventDefault()
       }
-      alert(message)
+      console.info(message)
     },
     handleClick(event) {
       alert('点击了按钮')
@@ -140,18 +203,18 @@ export default {
 
     handleScroll(event) {
       //滚动事件的默认行为 (scrolling) 将立即发生而非等待 `handleScroll`
-      alert('滚动了')
+      console.info('滚动了')
       this.sleep(1000)
     },
     // sleep 函数
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
-    submit () {
+    submit() {
       alert('提交表单')
     },
-    onPageDown(){
-      alert('向下翻页')
+    onPageDown() {
+      console.info('向下翻页')
     }
   }
 }

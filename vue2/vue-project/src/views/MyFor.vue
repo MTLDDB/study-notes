@@ -9,21 +9,31 @@
     <button>Add</button>
   </form>
   <ul>
-    <myItem
-        v-for="(todo, index) in todos"
-        :key="todo.id"
-        :title="todo.title"
-        @remove="todos.splice(index, 1)"
-    ></myItem>
+    <myItem />
+<!--    <myItem-->
+<!--        v-for="(todo, index) in todos"-->
+<!--        :key="todo.id"-->
+<!--        :title="todo.title"-->
+<!--        @remove="todos.splice(index, 1)"-->
+<!--    ></myItem>-->
   </ul>
+
+  <div>
+    <counter />
+    <counter />
+    <counter />
+    <counter />
+    <counter />
+  </div>
 </template>
 
 
 <script>
 import myItem from "@/components/MyItem.vue";
-
+import counter   from "@/components/counter.vue";
 export default {
-  components: { myItem },
+  components: { myItem ,
+    counter},
   data() {
     return {
       newTodoText: '',

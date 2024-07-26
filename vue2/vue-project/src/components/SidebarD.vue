@@ -40,6 +40,7 @@ export default {
           ],
         },
         { id: 4, name: 'FOR', path: '/for' },
+        { id: 5, name: 'BLOG', path: '/blog' },
       ],
       openItems: new Set(),// 用于存储展开的菜单项
     };
