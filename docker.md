@@ -72,7 +72,8 @@ systemctl enable docker #设置开机自启
   
 }
 
-- sudo systemctl deamon-reload
+- sudo systemctl daemon-reload
+
 - sudo systemctl restart docker
 
 # docker image
