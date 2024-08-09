@@ -1,43 +1,56 @@
 # 安装（linux）
 
-1. 更新系统
-确保系统包是最新的：
+- 1. 更新系统
+     
+ 确保系统包是最新的：
 
-sudo yum update -y
-2. 卸载旧版本的 Docker
-如果你有安装过旧版本的 Docker（叫 docker 或 docker-engine），可以先将它们卸载：
+ sudo yum update -y
+ 
+- 2. 卸载旧版本的 Docker
+     
+ 如果你有安装过旧版本的 Docker（叫 docker 或 docker-engine），可以先将它们卸载：
 
-sudo yum remove docker docker-common docker-selinux docker-engine
-3. 安装依赖包
+ sudo yum remove docker docker-common docker-selinux docker-engine
+- 3. 安装依赖包
+     
 Docker 需要一些额外的依赖包：
 
 sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-4. 设置 Docker 仓库
+- 4. 设置 Docker 仓库
+     
 使用以下命令来设置 Docker 的官方仓库：
 
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-5. 安装 Docker
+- 5. 安装 Docker
+     
 安装 Docker CE（社区版）：
 
 sudo yum install -y docker-ce
-6. 启动 Docker
+
+- 6. 启动 Docker
+     
 安装完成后，可以启动 Docker 服务：
 
 sudo systemctl start docker
-7. 设置开机自启
+- 7. 设置开机自启
+     
 为了让 Docker 在系统启动时自动启动，可以执行以下命令：
 
 sudo systemctl enable docker
-8. 验证 Docker 安装
+- 8. 验证 Docker 安装
+     
 运行一个简单的 hello-world 容器来验证 Docker 是否安装成功：
 
 sudo docker run hello-world
+
 如果你看到 “Hello from Docker!” 的信息，说明 Docker 已经成功安装并运行。
 
 额外步骤：配置非 root 用户运行 Docker
+
 如果你希望不使用 sudo 就能运行 Docker，可以将当前用户添加到 docker 组：
 
 sudo usermod -aG docker $USER
+
 然后退出当前终端并重新登录，或者执行 newgrp docker 使更改立即生效。
 
 完成以上步骤后，Docker 就已成功在 CentOS 7 上安装并可以使用了。
