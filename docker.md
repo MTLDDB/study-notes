@@ -114,3 +114,27 @@ systemctl enable docker #设置开机自启
 - docker commit -m "描述信息" -a "作者" tomcat01 my_tomcat:1.0 #将容器打包成一个镜像
 - docker save my_tomcat:1.0 -o my-tomcat-1.0.tar #保存镜像
 - docker load -i my-tomcat-1.0.tar #加载镜像到docker
+
+# 使用docker启动rabbitmq
+
+1. 拉取镜像
+ - `docker pull rabbitmq:management`  # 推荐带Web管理界面的版本
+2. 运行容器
+ ```
+ docker run -d \
+  --name my-rabbit \
+  -p 5672:5672 \      # AMQP协议端口（应用通信）
+  -p 15672:15672 \    # Web管理界面端口
+  --hostname rabbitmq-host \
+  -v /data/rabbitmq:/var/lib/rabbitmq
+  rabbitmq:management
+  ```
+  
+3. 默认账户 guest/guest 仅允许本地访问。需创建新用户远程登录：
+
+```
+docker exec -it my-rabbit bash 
+rabbitmqctl add_user admin yourpassword  # 创建用户 
+rabbitmqctl set_user_tags admin administrator  # 赋予管理员权限 
+rabbitmqctl set_permissions -p / admin ".*" ".*" ".*" 
+```
